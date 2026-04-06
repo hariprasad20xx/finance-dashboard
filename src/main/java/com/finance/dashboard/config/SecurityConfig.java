@@ -33,9 +33,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/records/**").hasRole("ADMIN")
 
                         .requestMatchers(HttpMethod.GET, "/records/filter").hasAnyRole("ADMIN", "ANALYST")
-                        .requestMatchers(HttpMethod.GET, "/dashboard").hasAnyRole("ADMIN", "ANALYST")
+                        .requestMatchers(HttpMethod.GET, "/dashboard").hasAnyRole("ADMIN", "ANALYST", "VIEWER")
 
-                        .requestMatchers(HttpMethod.GET, "/records").hasAnyRole("ADMIN", "ANALYST", "VIEWER")
+                        .requestMatchers(HttpMethod.GET, "/records").hasAnyRole("ADMIN", "ANALYST")
 
                         .anyRequest().authenticated()
                 )
