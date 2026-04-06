@@ -28,6 +28,11 @@ public class SecurityConfig {
 
                         .requestMatchers("/h2-console/**").permitAll()
 
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+
                         .requestMatchers(HttpMethod.POST, "/records").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/records/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/records/**").hasRole("ADMIN")
