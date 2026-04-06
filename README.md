@@ -1,8 +1,8 @@
 # 💰 Finance Dashboard API
 
-A robust backend application for managing financial records with advanced querying capabilities, role-based access control, and clean architecture design.
+A **secure, scalable backend system** for managing financial records with advanced querying, role-based access control, and clean architecture.
 
-Built with a focus on **clarity, scalability, and production-ready practices**, this project demonstrates strong backend engineering fundamentals.
+Designed and implemented to demonstrate **real-world backend engineering principles** such as layered architecture, secure API design, and efficient data handling.
 
 ---
 
@@ -15,7 +15,7 @@ The **Finance Dashboard API** allows users to:
 - Filter and paginate results efficiently
 - Enforce secure access using RBAC
 
-This project reflects **real-world backend design patterns**, including layered architecture, API design, and security implementation.
+This project reflects **production-oriented backend design**, focusing on maintainability, scalability, and clarity.
 
 ---
 
@@ -67,7 +67,8 @@ This project reflects **real-world backend design patterns**, including layered 
 ---
 
 ### 🛡️ Soft Delete Functionality
-- Records are marked as deleted rather than removed from the database, ensuring data traceability and accidental recovery
+- Records are marked as deleted instead of being permanently removed 
+- Ensures **data integrity and recovery capability**
 
 ---
 
