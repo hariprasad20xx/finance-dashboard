@@ -161,72 +161,171 @@ http://localhost:8080/h2-console
 
 ---
 
-## 🔑 Authentication
+## 📘 API Documentation
 
-Uses **Basic Authentication**.
-
-Example:
+### 🔗 Base URL
 
 ```
-Authorization: Basic <base64(username:password)>
-```
-
-### Sample Users (from `data.sql`)  
-
-| Username | Password     | Role    |
-|----------|-------------|--------|
-| admin    | admin123    | ADMIN  |
-| analyst  | analyst123  | ANALYST |
-| viewer   | viewer123   | VIEWER |
-
----
-
-## 📌 API Endpoints
-
-### 📊 Financial Records
-
-#### ➤ Create Record
-```
-POST /records
-```
-
-#### ➤ Get All Records (with filters & pagination)
-```
-GET /records?page=0&size=10&type=EXPENSE&category=Food
-```
-
-#### ➤ Get Record by ID
-```
-GET /records/{id}
-```
-
-#### ➤ Update Record
-```
-PUT /records/{id}
-```
-
-#### ➤ Delete Record
-```
-DELETE /records/{id}
+http://localhost:8080
 ```
 
 ---
 
-### 📈 Dashboard
+## 🔐 Authentication
 
-#### ➤ Get Financial Summary
+This application uses **Basic Authentication** with Role-Based Access Control (RBAC).
+
+| Username | Password   | Role    | Permissions                    |
+| -------- | ---------- | ------- | ------------------------------ |
+| admin    | admin123   | ADMIN   | Full access (CRUD + Dashboard) |
+| analyst  | analyst123 | ANALYST | Read + Create + Dashboard      |
+| viewer   | viewer123  | VIEWER  | Dashboard access only          |
+
+👉 Include this header in all requests:
+
 ```
-GET /dashboard
+Authorization: Basic <base64-encoded-credentials>
 ```
 
-Response:
+---
+
+## 📁 Financial Records API
+
+### ➤ Create Record
+
+**POST** `/records`
+**Access:** ADMIN, ANALYST
+
+**Request Body:**
+
+```json
+{
+  "title": "Groceries",
+  "amount": 1500,
+  "type": "EXPENSE",
+  "category": "FOOD",
+  "date": "2026-04-06"
+}
+```
+
+**Response:**
+
+```json
+{
+  "id": 1,
+  "title": "Groceries",
+  "amount": 1500,
+  "type": "EXPENSE",
+  "category": "FOOD",
+  "date": "2026-04-06"
+}
+```
+
+---
+
+### ➤ Get All Records
+
+**GET** `/records`
+**Access:** ADMIN, ANALYST
+
+---
+
+### ➤ Get Record By ID
+
+**GET** `/records/{id}`
+**Access:** ADMIN, ANALYST
+
+---
+
+### ➤ Update Record
+
+**PUT** `/records/{id}`
+**Access:** ADMIN
+
+**Request Body:**
+
+```json
+{
+  "title": "Updated Expense",
+  "amount": 2000,
+  "type": "EXPENSE",
+  "category": "FOOD",
+  "date": "2026-04-06"
+}
+```
+
+---
+
+### ➤ Delete Record
+
+**DELETE** `/records/{id}`
+**Access:** ADMIN
+
+---
+
+## 🔍 Filtering API
+
+### ➤ Filter Records
+
+**GET** `/records/filter`
+**Access:** ADMIN, ANALYST
+
+**Query Parameters (optional):**
+
+* `type` → EXPENSE / INCOME
+* `category` → FOOD, TRAVEL, etc.
+* `startDate` → YYYY-MM-DD
+* `endDate` → YYYY-MM-DD
+
+**Example:**
+
+```
+GET /records/filter?type=EXPENSE&category=FOOD
+```
+
+---
+
+## 📊 Dashboard API
+
+### ➤ Get Dashboard Summary
+
+**GET** `/dashboard/summary`
+**Access:** ADMIN, ANALYST, VIEWER
+
+**Response Example:**
+
 ```json
 {
   "totalIncome": 50000,
-  "totalExpense": 30000,
-  "netBalance": 20000
+  "totalExpense": 20000,
+  "netBalance": 30000
 }
 ```
+
+---
+
+## ⚠️ Error Handling
+
+All errors follow this structure:
+
+```json
+{
+  "timestamp": "2026-04-06T10:00:00",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Validation failed",
+  "path": "/records"
+}
+```
+
+---
+
+## 📌 Notes
+
+* All endpoints require authentication.
+* Role-based access is enforced using Spring Security.
+* Dates must be in `YYYY-MM-DD` format.
+* Pagination and filtering improve performance for large datasets.
 
 ---
 
