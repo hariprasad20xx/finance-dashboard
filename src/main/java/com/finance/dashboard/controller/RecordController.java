@@ -3,6 +3,7 @@ package com.finance.dashboard.controller;
 import com.finance.dashboard.dto.RecordDTO;
 import com.finance.dashboard.entity.FinancialRecord;
 import com.finance.dashboard.service.RecordService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class RecordController {
     private final RecordService service;
 
     @PostMapping
-    public FinancialRecord create(@RequestBody RecordDTO dto) {
+    public FinancialRecord create(@Valid @RequestBody RecordDTO dto) {
         return service.create(dto);
     }
 
@@ -27,7 +28,7 @@ public class RecordController {
     }
 
     @PutMapping("/{id}")
-    public FinancialRecord update(@PathVariable Long id, @RequestBody RecordDTO dto) {
+    public FinancialRecord update(@PathVariable Long id, @Valid @RequestBody RecordDTO dto) {
         return service.update(id, dto);
     }
 
